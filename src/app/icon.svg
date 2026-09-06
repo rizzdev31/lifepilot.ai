@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="96" fill="#0d1322"/>
+  <!-- Outer glow ring -->
+  <circle cx="256" cy="220" r="108" fill="none" stroke="#aef846" stroke-width="3" opacity="0.3"/>
+  <!-- Mic body -->
+  <rect x="220" y="120" width="72" height="130" rx="36" fill="#aef846"/>
+  <!-- Mic stand arc -->
+  <path d="M180 240 Q180 320 256 320 Q332 320 332 240" fill="none" stroke="#aef846" stroke-width="14" stroke-linecap="round"/>
+  <!-- Mic stand vertical -->
+  <line x1="256" y1="320" x2="256" y2="370" stroke="#aef846" stroke-width="14" stroke-linecap="round"/>
+  <!-- Base line -->
+  <line x1="210" y1="370" x2="302" y2="370" stroke="#aef846" stroke-width="14" stroke-linecap="round"/>
+  <!-- AI spark dots -->
+  <circle cx="360" cy="180" r="6" fill="#aef846" opacity="0.7"/>
+  <circle cx="378" cy="210" r="4" fill="#aef846" opacity="0.5"/>
+  <circle cx="152" cy="200" r="5" fill="#aef846" opacity="0.6"/>
+  <circle cx="138" cy="170" r="3" fill="#aef846" opacity="0.4"/>
+</svg>

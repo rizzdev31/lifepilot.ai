@@ -1,0 +1,42 @@
+{
+  "name": "LifePilot AI",
+  "short_name": "LifePilot",
+  "description": "AI Executive Assistant — just speak, AI organizes your life.",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0d1322",
+  "theme_color": "#0d1322",
+  "orientation": "portrait",
+  "categories": ["productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Voice AI",
+      "short_name": "Voice",
+      "description": "Rekam task baru dengan suara",
+      "url": "/voice",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Daily Briefing",
+      "short_name": "Briefing",
+      "description": "Lihat ringkasan harian",
+      "url": "/briefing",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "screenshots": []
+}
