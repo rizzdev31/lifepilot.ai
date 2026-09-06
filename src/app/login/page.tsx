@@ -1,4 +1,4 @@
-import { signInWithGoogle } from "./actions";
+import { signInWithGoogle, signInAsGuest } from "./actions";
 
 interface LoginPageProps {
   searchParams: Promise<{ error?: string; next?: string }>;
@@ -89,6 +89,23 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
               />
             </svg>
             Continue with Google
+          </button>
+        </form>
+
+        {/* Demo / Guest mode */}
+        <div className="w-full flex items-center gap-3 mb-4">
+          <div className="flex-1 h-px bg-[#424936]" />
+          <span className="text-xs text-[#8c947c] font-medium">atau</span>
+          <div className="flex-1 h-px bg-[#424936]" />
+        </div>
+
+        <form action={signInAsGuest} className="w-full mb-8">
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 bg-transparent border border-[#aef846]/40 text-[#aef846] font-semibold text-sm py-3.5 px-6 rounded-xl hover:bg-[#aef846]/8 transition-all duration-200 active:scale-[0.98]"
+          >
+            <span className="material-symbols-outlined text-base" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
+            Coba Demo Tanpa Login
           </button>
         </form>
 

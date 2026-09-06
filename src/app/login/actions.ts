@@ -3,6 +3,15 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 
+export async function signInAsGuest() {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInAnonymously();
+  if (error) {
+    redirect(`/login?error=${encodeURIComponent(error.message)}`);
+  }
+  redirect("/dashboard");
+}
+
 export async function signInWithGoogle() {
   const supabase = await createClient();
 
