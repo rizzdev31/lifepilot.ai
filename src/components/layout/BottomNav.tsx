@@ -21,20 +21,14 @@ interface BeforeInstallPromptEvent extends Event {
 export default function BottomNav() {
   const pathname = usePathname();
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
-    // Deteksi apakah sudah diinstall sebagai PWA
-    if (window.matchMedia("(display-mode: standalone)").matches) {
-      setIsInstalled(true);
-      return;
-    }
+    if (window.matchMedia("(display-mode: standalone)").matches) return;
 
     const handler = (e: Event) => {
       e.preventDefault();
       setInstallPrompt(e as BeforeInstallPromptEvent);
     };
-
     window.addEventListener("beforeinstallprompt", handler);
     return () => window.removeEventListener("beforeinstallprompt", handler);
   }, []);
@@ -43,30 +37,28 @@ export default function BottomNav() {
     if (!installPrompt) return;
     await installPrompt.prompt();
     const { outcome } = await installPrompt.userChoice;
-    if (outcome === "accepted") {
-      setInstallPrompt(null);
-      setIsInstalled(true);
-    }
+    if (outcome === "accepted") setInstallPrompt(null);
   }
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 md:hidden flex flex-col items-center gap-2">
-
-      {/* PWA Install chip — muncul di atas nav ketika bisa diinstall */}
-      {installPrompt && !isInstalled && (
-        <button
-          onClick={handleInstall}
-          className="flex items-center gap-2 bg-[#aef846] text-[#112000] text-xs font-bold px-4 py-2 rounded-full shadow-[0_4px_16px_rgba(174,248,70,0.4)] hover:scale-105 active:scale-95 transition-transform animate-bounce-subtle"
-        >
-          <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
-            install_mobile
-          </span>
-          Install LifePilot AI
-        </button>
+    <>
+      {/* PWA install banner — muncul di atas nav saat bisa diinstall */}
+      {installPrompt && (
+        <div className="fixed bottom-20 left-0 right-0 flex justify-center z-50 px-4 pb-2 md:hidden">
+          <button
+            onClick={handleInstall}
+            className="flex items-center gap-2 bg-[#aef846] text-[#112000] text-xs font-bold px-5 py-2.5 rounded-full shadow-[0_4px_20px_rgba(174,248,70,0.4)] hover:scale-105 active:scale-95 transition-transform animate-bounce-subtle"
+          >
+            <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>
+              install_mobile
+            </span>
+            Install LifePilot AI
+          </button>
+        </div>
       )}
 
-      {/* Floating pill nav */}
-      <nav className="flex items-center gap-0.5 bg-[#191f2f]/95 backdrop-blur-xl border border-[#424936]/80 rounded-2xl px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.65),0_0_0_1px_rgba(255,255,255,0.04)]">
+      {/* Bottom nav — original design, fixed */}
+      <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-safe h-20 bg-[#191f2f] border-t border-[#424936] shadow-[0_-4px_20px_rgba(0,0,0,0.5)] rounded-t-xl md:hidden">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
 
@@ -75,16 +67,12 @@ export default function BottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative flex items-center justify-center mx-1 -mt-5"
+                className="relative flex flex-col items-center justify-center -mt-8"
                 aria-label="Voice AI"
               >
-                <span className="absolute w-14 h-14 rounded-full bg-[#aef846]/30 animate-ping" />
-                <span className={cn(
-                  "w-14 h-14 rounded-full bg-[#aef846] flex items-center justify-center text-[#112000] z-10",
-                  "shadow-[0_0_20px_rgba(174,248,70,0.6)] border-4 border-[#191f2f]",
-                  "hover:scale-105 active:scale-95 transition-transform"
-                )}>
-                  <span className="material-symbols-outlined text-2xl" style={{ fontVariationSettings: "'FILL' 1" }}>
+                <span className="absolute inset-0 bg-[#aef846]/40 rounded-full animate-ping opacity-50 w-16 h-16" />
+                <span className="w-16 h-16 rounded-full bg-[#aef846] flex items-center justify-center text-[#112000] shadow-[0_0_20px_rgba(174,248,70,0.5)] z-10 border-4 border-[#191f2f]">
+                  <span className="material-symbols-outlined text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>
                     mic
                   </span>
                 </span>
@@ -98,14 +86,14 @@ export default function BottomNav() {
               href={item.href}
               aria-label={item.label}
               className={cn(
-                "flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200",
+                "flex flex-col items-center justify-center p-2 transition-all duration-200",
                 isActive
-                  ? "bg-[#2f3445] text-[#aef846] shadow-[inset_0_0_0_1px_rgba(174,248,70,0.2)]"
-                  : "text-[#c1cab0] hover:text-[#dde2f8] hover:bg-[#242a3a]"
+                  ? "text-[#aef846] bg-[#2f3445] rounded-full scale-110 shadow-[0_0_15px_rgba(174,248,70,0.25)]"
+                  : "text-[#c1cab0] hover:text-[#dde2f8]"
               )}
             >
               <span
-                className="material-symbols-outlined text-[22px]"
+                className="material-symbols-outlined"
                 style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
               >
                 {item.icon}
@@ -114,6 +102,6 @@ export default function BottomNav() {
           );
         })}
       </nav>
-    </div>
+    </>
   );
 }
